@@ -1,0 +1,58 @@
+<div class="formularioRegistro">
+    <h1>Crear Persona</h1>
+    <form [formGroup]="personaForm" (ngSubmit)="guardar()">
+        <div class="form-group">
+            <label>Nombre: </label>
+            <input type="text" formControlName="nombre" class="form-control">
+        </div>
+        <br>
+        <div class="form-group">
+            <label>Rol: </label>
+            <select id="rol" formControlName="rol" class="form-control">
+                <option [ngValue]="item" *ngFor="let item of roles;">{{item.nombre}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="radio">
+            <label>Activo: </label>
+            <div *ngFor="let activo of opcionesValues">
+                <label>
+                    <input formControlName="activo" value="{{activo}}" type="radio" name="activo">
+                    {{activo}}
+                </label>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary" [disabled]="personaForm.invalid" style="margin: 10px">Guardar</button>
+        <button type="button" class="btn btn-secondary" (click)="limpiar()">Limpiar</button>
+    </form>
+</div>
+
+<div class="tabla">
+    <h2>Personas Registradas</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Rol</th>
+                <th>Activo</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of personas">
+                <td>{{item.id}}</td>
+                <td>{{item.nombre}}</td>
+                <td>{{item.rol.nombre}}</td>
+                <td>{{item.activo == 'Si' ? 'Si':'No'}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" (click)="editar(item)" style="margin: 10px">Editar</button>
+                    <button type="button" class="btn btn-danger" (click)="eliminar(item)">Eliminar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<router-outlet></router-outlet>
